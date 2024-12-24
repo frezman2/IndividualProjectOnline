@@ -1,9 +1,9 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: rgb(244, 244, 248);
     max-width: 1200px;
     margin: 0 auto;
-    background-color: rgb(244, 244, 248);
 }
 
 header {
@@ -71,22 +71,64 @@ header {
     color: #333;
 }
 
-.class-block {
-    background-color: #f8f9fa;
+#add-class-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#add-class-form input {
+    padding: 10px;
     border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+#add-class-form button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#add-class-form button:hover {
+    background-color: #0056b3;
+}
+
+.class-block {
+    background-color: #fff;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .class-block h3 {
     font-size: 18px;
-    margin-bottom: 10px;
+    margin: 0;
     color: #333;
 }
 
 .class-block p {
     font-size: 16px;
+    margin: 0;
     color: #666;
+}
+
+.delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    color: #666;
+}
+
+.delete-button:hover {
+    color: #333;
 }

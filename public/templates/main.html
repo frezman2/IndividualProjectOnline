@@ -3,72 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пример хедера</title>
+    <title>Главная</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_main.css') }}">
+    <script>
+        // Добавление класса
+        function addClass() {
+            const className = document.getElementById("class-name").value;
+            const schoolYear = document.getElementById("school-year").value;
+
+            if (className.trim() === "" || schoolYear.trim() === "") {
+                alert("Пожалуйста, заполните все поля!");
+                return;
+            }
+
+            const classContainer = document.getElementById("classes-container");
+            const classBlock = document.createElement("div");
+            classBlock.className = "class-block";
+
+            classBlock.innerHTML = `
+                <h3>${className}</h3>
+                <p>${schoolYear}</p>
+                <button class="delete-button" onclick="deleteClass(this)">🗑️</button>`
+            ;
+
+            classContainer.appendChild(classBlock);
+            document.getElementById("class-name").value = "";
+            document.getElementById("school-year").value = "";
+        }
+
+        // Удаление класса
+        function deleteClass(button) {
+            const classBlock = button.parentElement;
+            classBlock.remove();
+        }
+    </script>
 </head>
-<body>  
-  <script src="src/autorization.js"></script>
-  <!DOCTYPE html>
-  <html lang="ru">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Главная</title>
-  </head>
-  <body>
-      <header>
-          <div class="header-content">
-              <div class="header-left">
-                  <a href="index.html" class="site-title">Название Сайта</a>
-              </div>
-              <div class="header-right">
-                  <div class="profile">
-                      <img src="data:image/png;base64,{{ profile_icon }}" alt="Иконка профиля" class="profile-icon">
-                      <span class="profile-name">
-                          {% if username %}
-                              {{ username }}
-                          {% else %}
-                              Гость
-                          {% endif %}
-                      </span>
-                  </div>
-              </div>
-          </div>
-      </header>
-    <div class="classes-section">
-    <h2>Классы</h2>
-    </div>
-    <div class="classes-section">
-        <h3>10В</h3>
-        <p>2009 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>9Е</h3>
-        <p>2007 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>7У</h3>
-        <p>2007 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>10Д</h3>
-        <p>2009 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>8З</h3>
-        <p>2007 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>6М</h3>
-        <p>2117 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>1Д</h3>
-        <p>2107 ШК</p>
-    </div>
-    <div class="classes-section">
-        <h3>8К</h3>
-        <p>2009 ШК</p>
-    </div>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-left">
+                <a href="index.html" class="site-title">ФитКласс</a>
+            </div>
+            <div class="header-right">
+                <div class="profile">
+                    <img src="data:image/png;base64,{{ profile_icon }}" alt="Иконка профиля" class="profile-icon">
+                    <span class="profile-name">
+                        {% if username %}
+                            {{ username }}
+                        {% else %}
+                            Гость
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="table-section">
+            <section class="classes-section">
+                <h2>Классы</h2>
+                <div id="add-class-form">
+                    <input type="text" id="class-name" placeholder="Название класса" required>
+                    <input type="text" id="school-year" placeholder="Школа" required>
+                    <button onclick="addClass()">Добавить класс</button>
+                </div>
+            </section>
+                <div id="classes-container">
+                    {% for class_data in classes %}
+                    <div class="class-block">
+                        <h3>{{ class_data.name }}</h3>
+                        <p>{{ class_data.school }}</p>
+                        <button class="delete-button" onclick="deleteClass(this)">🗑️</button>
+                    </div>
+                    {% endfor %}
+                </div>
+        </section>
+    </main>
 </body>
 </html>
