@@ -8,34 +8,37 @@
     <script>
         // Добавление класса
         function addClass() {
-            const className = document.getElementById("class-name").value;
-            const schoolYear = document.getElementById("school-year").value;
+        const className = document.getElementById("class-name").value;
+        const schoolYear = document.getElementById("school-year").value;
 
-            if (className.trim() === "" || schoolYear.trim() === "") {
-                alert("Пожалуйста, заполните все поля!");
-                return;
+        if (className.trim() === "" || schoolYear.trim() === "") {
+            alert("Пожалуйста, заполните все поля!");
+            return;
+        }
+
+        fetch('/add_class', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name: className, school: schoolYear }),
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                return response.json().then(error => { throw error; });
             }
-
-            const classContainer = document.getElementById("classes-container");
-            const classBlock = document.createElement("div");
-            classBlock.className = "class-block";
-
-            classBlock.innerHTML = `
-                <h3>${className}</h3>
-                <p>${schoolYear}</p>
-                <button class="delete-button" onclick="deleteClass(this)">🗑️</button>`
-            ;
-
-            classContainer.appendChild(classBlock);
-            document.getElementById("class-name").value = "";
-            document.getElementById("school-year").value = "";
-        }
-
-        // Удаление класса
-        function deleteClass(button) {
-            const classBlock = button.parentElement;
-            classBlock.remove();
-        }
+        })
+        .then(data => {
+            alert(data.message);
+            location.reload(); // Перезагрузка страницы для отображения нового класса
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Ошибка при добавлении класса');
+        });
+    }
     </script>
 </head>
 <body>
@@ -69,15 +72,14 @@
                     <button onclick="addClass()">Добавить класс</button>
                 </div>
             </section>
-                <div id="classes-container">
-                    {% for class_data in classes %}
-                    <div class="class-block">
-                        <h3>{{ class_data.name }}</h3>
-                        <p>{{ class_data.school }}</p>
-                        <button class="delete-button" onclick="deleteClass(this)">🗑️</button>
-                    </div>
-                    {% endfor %}
+            <div id="classes-container">
+                {% for class_data in classes %}
+                <div class="class-block">
+                    <h3>{{ class_data[0] }}</h3>
+                    <p>{{ class_data[1] }}</p>
                 </div>
+                {% endfor %}
+            </div>            
         </section>
     </main>
 </body>

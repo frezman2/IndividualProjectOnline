@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица оценок</title>
+    
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="header-left">
+                <a href="#" class="site-title">Сайт оценок</a>
+            </div>
+            <div class="header-right">
+                <div class="profile">
+                    <img src="profile-icon.png" alt="Profile Icon" class="profile-icon">
+                    <span class="profile-name">Иван Иванов</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="classes-section">
+        <h2>Таблица оценок</h2>
+        <div class="input-fields">
+            <input type="text" id="trimester-input" placeholder="Номер триместра">
+            <input type="text" id="normative-input" placeholder="Название норматива">
+        </div>
+        <div class="buttons">
+            <button class="add-button" onclick="addRow()">Добавить строку</button>
+            <button class="remove-button" onclick="removeRow()">Удалить строку</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="3" class="trimester" id="trimester-header">Триместр</th>
+                </tr>
+                <tr>
+                    <th>ФИО</th>
+                    <th id="normative-header">Название норматива</th>
+                    <th>Оценка</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <!-- Ряды будут добавляться здесь -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.getElementById('trimester-input').addEventListener('input', updateTrimesterHeader);
+        document.getElementById('normative-input').addEventListener('input', updateNormativeHeader);
+
+        function updateTrimesterHeader() {
+            const trimesterHeader = document.getElementById('trimester-header');
+            trimesterHeader.textContent = document.getElementById('trimester-input').value;
+        }
+
+        function updateNormativeHeader() {
+            const normativeHeader = document.getElementById('normative-header');
+            normativeHeader.textContent = document.getElementById('normative-input').value;
+        }
+
+        function addRow() {
+            const tableBody = document.getElementById('table-body');
+            const newRow = document.createElement('tr');
+
+            const cell1 = document.createElement('td');
+            cell1.contentEditable = true;
+            newRow.appendChild(cell1);
+
+            const cell2 = document.createElement('td');
+            cell2.contentEditable = true;
+            newRow.appendChild(cell2);
+
+            const cell3 = document.createElement('td');
+            cell3.contentEditable = true;
+            newRow.appendChild(cell3);
+
+            tableBody.appendChild(newRow);
+        }
+
+        function removeRow() {
+            const tableBody = document.getElementById('table-body');
+            if (tableBody.rows.length > 0) {
+                tableBody.deleteRow(-1);
+            }
+        }
+
+        // Инициализация таблицы с 20 строками
+        for (let i = 0; i < 20; i++) {
+            addRow();
+        }
+    </script>
+</body>
+</html>
